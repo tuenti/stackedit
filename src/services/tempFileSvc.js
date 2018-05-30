@@ -22,6 +22,11 @@ export default {
     }
     this.closed = true;
   },
+  save() {
+    if (!this.closed && origin && window.parent) {
+      window.parent.postMessage({ type: 'save' }, origin);
+    }
+  },
   init() {
     if (!origin || !window.parent) {
       return Promise.resolve();

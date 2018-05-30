@@ -2,8 +2,7 @@
   <nav class="navigation-bar" :class="{'navigation-bar--editor': styles.showEditor && !revisionContent, 'navigation-bar--light': light}">
     <!-- Explorer -->
     <div class="navigation-bar__inner navigation-bar__inner--left navigation-bar__inner--button">
-      <button class="navigation-bar__button button" v-if="light" @click="close()" v-title="'Close StackEdit'"><icon-close-circle></icon-close-circle></button>
-      <button class="navigation-bar__button button" v-else tour-step-anchor="explorer" @click="toggleExplorer()" v-title="'Toggle explorer'"><icon-folder></icon-folder></button>
+      <button class="navigation-bar__button button" v-if="!light" tour-step-anchor="explorer" @click="toggleExplorer()" v-title="'Toggle explorer'"><icon-folder></icon-folder></button>
     </div>
     <!-- Side bar -->
     <div class="navigation-bar__inner navigation-bar__inner--right navigation-bar__inner--button">
@@ -42,6 +41,7 @@
         </button>
         <div class="navigation-bar__spacer" v-else></div>
       </div>
+      <button class="navigation-bar__button button" v-if="light" @click="save()" v-title="'Save changes'"><icon-content-save></icon-content-save></button>
     </div>
   </nav>
 </template>
@@ -205,6 +205,9 @@ export default {
     },
     close() {
       tempFileSvc.close();
+    },
+    save() {
+      tempFileSvc.save();
     },
   },
   created() {
