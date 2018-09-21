@@ -89,7 +89,8 @@ module.exports = {
       title: 'StackEdit',
     }),
     new webpack.DefinePlugin({
-      VERSION: JSON.stringify(require('../package.json').version)
+      VERSION: JSON.stringify(require('../package.json').version),
+      'process.env.EXTERNAL_UPLOAD_URL':  JSON.stringify(process.env.EXTERNAL_UPLOAD_URL)
     })
   ]
 }

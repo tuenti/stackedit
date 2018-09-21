@@ -5,7 +5,11 @@
       <form-entry label="URL" error="url">
         <input slot="field" class="textfield" type="text" v-model.trim="url" @keydown.enter="resolve()">
       </form-entry>
-      <menu-entry @click.native="openGooglePhotos(token)" v-for="token in googlePhotosTokens" :key="token.sub">
+      <menu-entry @click.native="externalImageUpload">
+        <icon-provider slot="icon" provider-id="googlePhotos"></icon-provider>
+        <span>Upload photo</span>
+      </menu-entry>
+      <!--menu-entry @click.native="openGooglePhotos(token)" v-for="token in googlePhotosTokens" :key="token.sub">
         <icon-provider slot="icon" provider-id="googlePhotos"></icon-provider>
         <div>Open from Google Photos</div>
         <span>{{token.name}}</span>
@@ -13,7 +17,7 @@
       <menu-entry @click.native="addGooglePhotosAccount">
         <icon-provider slot="icon" provider-id="googlePhotos"></icon-provider>
         <span>Add Google Photos account</span>
-      </menu-entry>
+      </menu-entry-->
     </div>
     <div class="modal__button-bar">
       <button class="button" @click="reject()">Cancel</button>
@@ -57,6 +61,16 @@ export default modalTemplate({
       const callback = this.config.callback;
       this.config.reject();
       callback(null);
+    },
+    externalImageUpload() {
+      let uploadUrl = process.env.EXTERNAL_UPLOAD_URL;
+      const locPath = window.location.pathname;
+      const prefix = '/edit/';
+      if (locPath.indexOf(prefix) === 0) {
+        uploadUrl += locPath.substring(prefix.length, locPath.lastIndexOf('/') + 1);
+        uploadUrl += 'img/';
+      }
+      window.open(uploadUrl, '_blank');
     },
     addGooglePhotosAccount() {
       return googleHelper.addPhotosAccount();
