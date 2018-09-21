@@ -64,7 +64,7 @@ export default modalTemplate({
     },
     externalImageUpload() {
       let uploadUrl = process.env.EXTERNAL_UPLOAD_URL;
-      const locPath = window.location.pathname;
+      const locPath = window.top.location.pathname;
       const prefix = '/edit/';
       if (locPath.indexOf(prefix) === 0) {
         uploadUrl += locPath.substring(prefix.length, locPath.lastIndexOf('/') + 1);
